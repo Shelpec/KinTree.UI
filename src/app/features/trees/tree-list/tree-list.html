@@ -1,0 +1,17 @@
+<div>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Мои деревья</h2>
+    <button (click)="logout()">Выйти</button>
+  </div>
+
+  <div *ngIf="trees.length > 0; else noTrees">
+    <ul>
+      <li *ngFor="let tree of trees">
+        {{ tree.name }} (ID: {{ tree.id }})
+      </li>
+    </ul>
+  </div>
+  <ng-template #noTrees>
+    <p>У вас пока нет деревьев. Создайте первое!</p>
+  </ng-template>
+</div>
