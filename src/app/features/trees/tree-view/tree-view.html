@@ -2,18 +2,44 @@
   <button (click)="goBack()"><< Назад к списку деревьев</button>
   <hr>
 
-  <div *ngIf="isLoading">
-    <p>Загрузка данных...</p>
-  </div>
+  <div *ngIf="isLoading" class="loading-indicator"><p>Загрузка и построение дерева...</p></div>
+  <div *ngIf="error" class="error-message"><p>{{ error }}</p></div>
 
-  <div *ngIf="error">
-    <p style="color: red;">{{ error }}</p>
-  </div>
+  <div *ngIf="!isLoading && !error && nodes.length > 0" class="graph-container">
+    <ngx-graph
+      [links]="links"
+      [nodes]="nodes"
+      [update$]="update$"
+      [layout]="layout"
+      [layoutSettings]="layoutSettings" 
+      [curve]="d3.curveBasis"
+      [enableZoom]="zoomEnabled"
+      [panningEnabled]="panningEnabled"
+      >
+      <!-- Шаблоны #nodeTemplate и #linkTemplate остаются без изменений -->
+      <ng-template #nodeTemplate let-node>
+        <svg:g class="node-group">
+          <foreignObject *ngIf="!node.data.isMarriageNode" x="-90" y="-55" width="180" height="110">
+            <a [routerLink]="['/trees', treeId, 'person', node.id]">
+              <div class="node-card" [ngClass]="node.data.gender === 'Male' ? 'male' : 'female'">
+                <div class="node-name">{{ node.label }}</div>
+                <div class="node-dates">
+                  {{ node.data.dateOfBirth | date: 'dd.MM.yyyy' }} - {{ node.data.dateOfDeath ? (node.data.dateOfDeath | date: 'dd.MM.yyyy') : '' }}
+                </div>
+                <div class="node-details">
+                  <span class="detail-gender">{{ node.data.gender === 'Male' ? 'Мужчина' : 'Женщина' }}</span>
+                </div>
+              </div>
+            </a>
+          </foreignObject>
+        </svg:g>
+      </ng-template>
 
-  <!-- Убираем <pre> и используем наш новый компонент -->
-  <div *ngIf="!isLoading && !error && treeData">
-    <h3>Структура дерева (ID: {{ treeId }})</h3>
-    <!-- Для каждого "корневого" узла дерева мы вызываем наш рекурсивный компонент -->
-    <app-person-node *ngFor="let rootNode of treeData" [node]="rootNode"></app-person-node>
+      <ng-template #linkTemplate let-link>
+        <svg:g class="link-group">
+          <svg:path class="link"></svg:path>
+        </svg:g>
+      </ng-template>
+    </ngx-graph>
   </div>
 </div>

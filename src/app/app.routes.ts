@@ -15,21 +15,28 @@ export const routes: Routes = [
   {
     path: 'trees',
     component: TreeListComponent,
-    canActivate: [authGuard]
+    //canActivate: [authGuard]
   },
   {
     path: 'trees/view/:id',
     component: TreeViewComponent,
-    canActivate: [authGuard]
+    //canActivate: [authGuard]
   },
   // Вот наш новый роут. Убедимся, что он здесь есть.
   {
     path: 'person/:id',
     component: PersonDetailComponent,
-    canActivate: [authGuard]
+    //canActivate: [authGuard]
+  },
+    
+  {
+    // Теперь URL будет содержать и ID дерева, и ID человека
+    path: 'trees/:treeId/person/:id', 
+    component: PersonDetailComponent,
+    //canActivate: [authGuard]
   },
 
   // Редиректы
-  { path: '', redirectTo: '/trees', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/trees' }
 ];

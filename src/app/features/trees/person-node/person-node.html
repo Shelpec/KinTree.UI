@@ -1,21 +1,25 @@
-<!-- src/app/features/trees/person-node/person-node.component.html -->
 <div *ngIf="node" class="node-container">
   <div class="person-card">
-    <!-- ОБЕРНУЛИ В ССЫЛКУ -->
-    <a [routerLink]="['/person', node.id]" class="person-name">
+    <!-- Формируем правильную, полную ссылку -->
+    <a [routerLink]="['/trees', treeId, 'person', node.id]" class="person-name">
       {{ node.firstName }} {{ node.lastName }}
     </a>
     <span class="person-gender">({{ node.gender }})</span>
 
     <div *ngFor="let spouse of node.spouses" class="spouse-card">
-      + <!-- И СУПРУГА ТОЖЕ -->
-      <a [routerLink]="['/person', spouse.id]" class="person-name">
+      +
+      <a [routerLink]="['/trees', treeId, 'person', spouse.id]" class="person-name">
         {{ spouse.firstName }} {{ spouse.lastName }}
       </a>
     </div>
   </div>
 
   <div *ngIf="node.children && node.children.length > 0" class="children-container">
-    <app-person-node *ngFor="let child of node.children" [node]="child"></app-person-node>
+    <!-- И передаем treeId дальше дочерним компонентам -->
+    <app-person-node 
+      *ngFor="let child of node.children" 
+      [node]="child" 
+      [treeId]="treeId">
+    </app-person-node>
   </div>
 </div>

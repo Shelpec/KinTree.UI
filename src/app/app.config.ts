@@ -6,6 +6,7 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http'; // <-- Импортируем withInterceptors
 import { jwtInterceptor } from './core/interceptors/jwt-interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,8 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideRouter(routes),
     
-    provideHttpClient(withInterceptors([jwtInterceptor]))
+    provideHttpClient(withInterceptors([jwtInterceptor])),
+    provideAnimations() // <-- Добавляем провайдер анимаций
+  
   ]
 };

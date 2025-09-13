@@ -2,32 +2,62 @@
   <button (click)="goBackToTree()"><< Назад к дереву</button>
   <hr>
 
-  <div *ngIf="isLoading">
-    <p>Загрузка данных...</p>
-  </div>
+  <div *ngIf="isLoading"><p>Загрузка данных...</p></div>
+  <div *ngIf="error"><p style-="color: red;">{{ error }}</p></div>
 
-  <div *ngIf="error">
-    <p style="color: red;">{{ error }}</p>
-  </div>
+  <div *ngIf="!isLoading && !error && personInFocus" class="detail-container">
+    <div class="person-header">
+      <h1>{{ personInFocus.person.firstName }} {{ personInFocus.person.lastName }}</h1>
+      <p>Дата рождения: {{ personInFocus.person.dateOfBirth ? (personInFocus.person.dateOfBirth | date: 'dd.MM.yyyy') : 'Не указана' }}</p>
+    </div>
 
-  <div *ngIf="!isLoading && !error && personInFocus">
-    <h2>Родственные связи для: {{ personInFocus.person.firstName }} {{ personInFocus.person.lastName }}</h2>
+    <!-- Новая сетка для групп -->
+    <div class="relatives-grid">
 
-    <table class="kinship-table">
-      <thead>
-        <tr>
-          <th>Имя</th>
-          <th>Кем приходится</th>
-          <th>Дата рождения</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let relation of kinshipData">
-          <td>{{ relation.person.firstName }} {{ relation.person.lastName }}</td>
-          <td><strong>{{ relation.termDisplayName }}</strong></td>
-          <td>{{ relation.person.dateOfBirth || 'Не указана' }}</td>
-        </tr>
-      </tbody>
-    </table>
+      <!-- Группа: Ближайшие родственники -->
+      <div class="relatives-group" *ngIf="directFamily.length > 0">
+        <h3>Ближайшие родственники</h3>
+        <div class="cards-container">
+          <a *ngFor="let relation of directFamily" [routerLink]="['/trees', treeId, 'person', relation.person.id]" class="relative-card">
+            <div class="card-name">{{ relation.person.firstName }} {{ relation.person.lastName }}</div>
+            <div class="card-term">{{ relation.termDisplayName }}</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Группа: Предки -->
+      <div class="relatives-group" *ngIf="ancestors.length > 0">
+        <h3>Предки</h3>
+        <div class="cards-container">
+          <a *ngFor="let relation of ancestors" [routerLink]="['/trees', treeId, 'person', relation.person.id]" class="relative-card">
+            <div class="card-name">{{ relation.person.firstName }} {{ relation.person.lastName }}</div>
+            <div class="card-term">{{ relation.termDisplayName }}</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Группа: Потомки -->
+      <div class="relatives-group" *ngIf="descendants.length > 0">
+        <h3>Потомки</h3>
+        <div class="cards-container">
+          <a *ngFor="let relation of descendants" [routerLink]="['/trees', treeId, 'person', relation.person.id]" class="relative-card">
+            <div class="card-name">{{ relation.person.firstName }} {{ relation.person.lastName }}</div>
+            <div class="card-term">{{ relation.termDisplayName }}</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Группа: Другие родственники -->
+      <div class="relatives-group" *ngIf="otherRelatives.length > 0">
+        <h3>Другие родственники</h3>
+        <div class="cards-container">
+          <a *ngFor="let relation of otherRelatives" [routerLink]="['/trees', treeId, 'person', relation.person.id]" class="relative-card">
+            <div class="card-name">{{ relation.person.firstName }} {{ relation.person.lastName }}</div>
+            <div class="card-term">{{ relation.termDisplayName }}</div>
+          </a>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

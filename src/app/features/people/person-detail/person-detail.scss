@@ -1,24 +1,93 @@
-.kinship-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+/* Общие стили для контейнера и заголовка остаются */
+.detail-container {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.kinship-table th, .kinship-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+.person-header {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+  h1 { 
+    margin: 0; 
+    font-size: 2.5em;
+    font-weight: 300;
+  }
+  p { 
+    margin: 5px 0 0; 
+    color: #888; 
+    font-size: 1.1em;
+  }
 }
 
-.kinship-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+/* Сетка для групп родственников */
+.relatives-grid {
+  display: grid;
+  grid-template-columns: 1fr; // По умолчанию одна колонка
+  gap: 30px;
+
+  // Для больших экранов делаем 2 колонки
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.kinship-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+.relatives-group {
+  background-color: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+    font-weight: 500;
+    color: #343a40;
+  }
 }
 
-.kinship-table tr:hover {
-  background-color: #f1f1f1;
+/* Контейнер для карточек внутри группы */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Стили самой карточки родственника */
+.relative-card {
+  display: block;
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  flex-grow: 1;
+  min-width: 150px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-color: #007bff;
+  }
+
+  .card-name {
+    font-weight: 600;
+    font-size: 1.1em;
+    color: #212529;
+  }
+
+  .card-term {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #007bff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 }

@@ -12,4 +12,7 @@ import { RouterLink } from '@angular/router'; // <-- Импортируем
 export class PersonNodeComponent {
   // @Input() означает, что `node` будет передан этому компоненту извне
   @Input() node: any;
+
+  @Input() treeId: string | null | undefined; 
+  
 }
