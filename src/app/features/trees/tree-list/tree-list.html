@@ -6,8 +6,11 @@
 
   <div *ngIf="trees.length > 0; else noTrees">
     <ul>
+      <!-- Оборачиваем li в ссылку с помощью routerLink -->
       <li *ngFor="let tree of trees">
-        {{ tree.name }} (ID: {{ tree.id }})
+        <a [routerLink]="['/trees/view', tree.id]">
+          {{ tree.name }}
+        </a>
       </li>
     </ul>
   </div>

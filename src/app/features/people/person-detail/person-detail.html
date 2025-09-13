@@ -1,0 +1,33 @@
+<div>
+  <button (click)="goBackToTree()"><< Назад к дереву</button>
+  <hr>
+
+  <div *ngIf="isLoading">
+    <p>Загрузка данных...</p>
+  </div>
+
+  <div *ngIf="error">
+    <p style="color: red;">{{ error }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && !error && personInFocus">
+    <h2>Родственные связи для: {{ personInFocus.person.firstName }} {{ personInFocus.person.lastName }}</h2>
+
+    <table class="kinship-table">
+      <thead>
+        <tr>
+          <th>Имя</th>
+          <th>Кем приходится</th>
+          <th>Дата рождения</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let relation of kinshipData">
+          <td>{{ relation.person.firstName }} {{ relation.person.lastName }}</td>
+          <td><strong>{{ relation.termDisplayName }}</strong></td>
+          <td>{{ relation.person.dateOfBirth || 'Не указана' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

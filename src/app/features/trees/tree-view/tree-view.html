@@ -1,0 +1,19 @@
+<div>
+  <button (click)="goBack()"><< Назад к списку деревьев</button>
+  <hr>
+
+  <div *ngIf="isLoading">
+    <p>Загрузка данных...</p>
+  </div>
+
+  <div *ngIf="error">
+    <p style="color: red;">{{ error }}</p>
+  </div>
+
+  <!-- Убираем <pre> и используем наш новый компонент -->
+  <div *ngIf="!isLoading && !error && treeData">
+    <h3>Структура дерева (ID: {{ treeId }})</h3>
+    <!-- Для каждого "корневого" узла дерева мы вызываем наш рекурсивный компонент -->
+    <app-person-node *ngFor="let rootNode of treeData" [node]="rootNode"></app-person-node>
+  </div>
+</div>

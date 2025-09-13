@@ -1,14 +1,14 @@
 // src/app/features/trees/tree-list/tree-list.component.ts
 import { CommonModule } from '@angular/common'; // <-- Импортируем для *ngFor
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { TreeService } from '../tree';
 import { AuthService } from '../../../core/services/auth';
+import { Router, RouterLink } from '@angular/router'; // <-- Импортируем RouterLink
 
 @Component({
   selector: 'app-tree-list',
   standalone: true,
-  imports: [CommonModule], // <-- Добавляем в imports
+  imports: [CommonModule, RouterLink],
   templateUrl: './tree-list.html',
   styleUrl: './tree-list.scss'
 })
